@@ -9,6 +9,7 @@ Features:
   * optgroup labels are not selectable
   * any classes present on the select or its options are carried over to the div and li's, respectively
   * sliding animations are toggleable
+  * the select's change event is fired when the user selects a spicyselect option
 
 Example:
 
