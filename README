@@ -2,6 +2,9 @@ jQuery Spicy Select Plugin
 
 This plugin allows you to apply custom styles to your select boxes.  You can invoke it on a standard select box and it will hide it and write out a "div.spicyselect > ol > li" DOM structure in its place. All interactions with the div work the same way that the select does and when values are selected in the div, they are updated in the select.  The value of the select is always current and will be posted with the form as if you had used it directly.
 
+Demo URL: http://demo.codingfrontier.com/jquery-spicyselect/demo.html
+Spec URL: http://demo.codingfrontier.com/jquery-spicyselect/spec/suite.html
+
 Features:
 
   * default value for select is carried over to spicyselect
