@@ -42,7 +42,7 @@
         label.text(settings.defaultText);
 
         //Iterate over the children of the select
-        var options = selectMask.find("ol").hide();
+        var options = selectMask.find("> ol").hide();
         selectOptions.each(function() {
           var option = $(this);
 
@@ -75,7 +75,7 @@
 
         //Toggle the the ol if the display anchor is clicked
         selectMask.find("> a").click(function(){
-          var options = $(this).closest("div").find("ol");
+          var options = $(this).closest("div").find("> ol");
           settings.animate && options.slideToggle("fast") || options.toggle();
           return false;
         });
