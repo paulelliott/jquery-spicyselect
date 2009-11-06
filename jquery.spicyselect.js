@@ -20,8 +20,15 @@
 
       //Iterate through all the selects being masked
       return this.each(function() {
-        //Get and hide the select box
-        var selectBox = $(this).hide();
+        //Get and move the select box off the screen
+        var selectBox = $(this).css({
+          position: 'absolute',
+          left: '-9999px'
+        }).focus(function() {
+          $("#" + $(this).data("mask_id")).focus();
+        }).blur(function() {
+          hideMask($("#" + $(this).data("mask_id")), settings);
+        });
         var selectOptions = $("> *", this);
 
         //Create and store the id for the masking ol
@@ -30,7 +37,9 @@
 
         //Insert the basic structure for the mask into the DOM right after the select
         selectBox.after("<div id='" + maskId + "'><a></a><ol></ol></div>");
-        var selectMask = $("#" + maskId).addClass("spicyselect").addClass(selectBox.attr("class"));
+        var selectMask = $("#" + maskId).addClass("spicyselect").addClass(selectBox.attr("class")).focus(function(e) {
+          selectMask.addClass("focus");
+        });
         selectMask.data("select_id", selectBox.attr("id"));
         var label = selectMask.find("> a");
 
@@ -75,8 +84,7 @@
 
         //Toggle the the ol if the display anchor is clicked
         selectMask.find("> a").click(function(){
-          var options = $(this).closest("div").find("> ol");
-          settings.animate && options.slideToggle("fast") || options.toggle();
+          showMask(selectMask, settings);
           return false;
         });
 
@@ -87,16 +95,26 @@
           //Get the original select
           $('#' + mask.data('select_id')).val($(this).data("value")).change();
           mask.find("a:first").text($(this).text());
-          settings.animate && mask.find("> ol").slideUp("fast") || mask.find("> ol").hide();
+          hideMask(mask, settings);
         });
 
         //If the user clicks off the select, hide it
-        $("body").click(function(){
-          settings.animate && $(".spicyselect > ol").slideUp("fast") || $(".spicyselect > ol").hide();
+        $("body").click(function() {
+          hideMask($(".spicyselect"), settings);
         });
       });
     }
   });
+
+  function hideMask(mask, settings) {
+    settings.animate && mask.find("> ol").slideUp("fast") || mask.find("> ol").hide();
+    mask.removeClass("focus");
+  }
+
+  function showMask(mask, settings) {
+    settings.animate && mask.find("> ol").slideToggle("fast") || mask.find("> ol").toggle();
+    mask.addClass("focus");
+  }
 
   //Create an li for the mask from an option or optgroup
   function createLi(option) {

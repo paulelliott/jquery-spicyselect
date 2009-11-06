@@ -104,6 +104,23 @@ Screw.Unit(function() {
         expect(getMask($("select")).find("> ol").is(":visible")).to(be_true);
       });
     });
+
+    describe("when the select receives focus", function() {
+      var called = false;
+
+      before(function() {
+        $("select").spicyselect({animate:false});
+        var mask = getMask($("select")).focus(function() {
+          console.log("called!");
+          called = true;
+        });
+        $("select").focus();
+      });
+
+      it("should call focus on the mask", function() {
+        expect(called).to(be_true);
+      });
+    });
   });
   function getMask(select) {
     return $("#" + select.data("mask_id"));
