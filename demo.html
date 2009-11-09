@@ -5,6 +5,71 @@
     <script type='text/javascript'>
       $(function() { $("#test_select").spicyselect(); });
     </script>
+    <style type='text/css'>
+      .spicyselect {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid black;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        position: relative;
+      }
+      .spicyselect.focus {
+        -webkit-box-shadow: 0 0 5px black;
+      }
+      .spicyselect:hover {
+        cursor: default;
+      }
+
+      .spicyselect a {
+        display: block;
+        width: 100%;
+        font-style: italic;
+      }
+
+      .spicyselect > ol {
+        border-top: 1px solid black;
+        position: absolute;
+        background-color: white;
+        border: 1px solid black;
+      }
+
+      .spicyselect ol {
+        margin: 0;
+        padding: 0;
+      }
+
+      .spicyselect ol ol {
+        padding-left: 8px;
+      }
+
+      .spicyselect ol ol li.optgroup_label {
+        margin-left: -8px;
+        font-weight: bold;
+        background-color: lightgray;
+      }
+
+      .spicyselect ol ol li.optgroup_label:hover {
+        background-color: lightgray;
+        color: black;
+      }
+
+      .spicyselect li {
+        border-bottom: 1px solid black;
+        list-style: none;
+        padding: 5px;
+      }
+
+      .spicyselect li:hover {
+        background-color: black;
+        color: white;
+      }
+
+      .spicyselect li.current {
+        background-color: lightblue;
+        color: black;
+      }
+    </style>
   </head>
   <body>
     <p>Given a select that looks like this:</p>
@@ -16,7 +81,7 @@
         <option class='classy'>Classy Option</option>
         <optgroup label='Incredible Option Group!'>
           <option value='incredibility'>Option Groups Rock</option>
-          <option>This Really Is Spicy!</option>
+          <option style='border-bottom:0;'>This Really Is Spicy!</option>
         </optgroup>
       </select>
     </p>
@@ -29,7 +94,7 @@
         <option class='classy'>Classy Option</option>
         <optgroup label='Incredible Option Group!'>
           <option value='incredibility'>Option Groups Rock</option>
-          <option>This Really Is Spicy!</option>
+          <option style='border-bottom:0;'>This Really Is Spicy!</option>
         </optgroup>
       </select>
     </p>
