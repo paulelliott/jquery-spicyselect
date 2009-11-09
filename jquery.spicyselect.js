@@ -167,7 +167,8 @@
   //Create an li for the mask from an option or optgroup
   function createLi(option) {
     var text = option.is("optgroup") ? option.attr("label") : option.text();
-    var li = $("<li>" + text + "</li>").addClass(option.attr('class')).attr("style", option.attr('style'));
+    var li = $("<li>" + text + "</li>").addClass(option.attr('class'));
+    li.attr("style", option.attr('style'));
     option.is("optgroup") && li.addClass("optgroup_label");
     li.data('value', option.val());
     return li;
