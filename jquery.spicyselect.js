@@ -123,8 +123,12 @@
         });
 
         //Toggle the the ol if the display anchor is clicked
-        selectMask.find("> a").click(function(){
-          showMask(selectMask, settings);
+        selectMask.find("> a").click(function() {
+          if (selectMask.find("> ol").is(":visible")) {
+            hideMask(selectMask, settings);
+          } else {
+            showMask(selectMask, settings);
+          }
           return false;
         });
 
