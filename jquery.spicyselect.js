@@ -77,6 +77,9 @@
               hideMask(selectMask, settings);
             } else if (e.which == 13) {
               //allow enter to pass through to the form if the the options are not visible.
+            } else {
+              showMask(selectMask, settings);
+              keyhandler(selectMask, e);
             }
 
             return false;
@@ -165,6 +168,24 @@
     if (option.length > 0) {
       mask.find("a:first").text(option.text());
       $("#" + mask.data("select_id")).val(option.data("value")).change();
+    }
+  }
+
+  function keyhandler(mask, e) {
+    //Append the new character to the search data and store it
+    if (e.which == 8 || e.which == 46) {
+      mask.data("search_data", "");
+    } else {
+      var searchData = ((mask.data("search_data") || "") + String.fromCharCode(e.which)).toLowerCase();
+      mask.data("search_data", searchData);
+      mask.find("li.current").removeClass("current");
+      mask.find("li").each(function() {
+        var element = $(this);
+        if (!element.hasClass("optgroup_label") && element.text().toLowerCase().match(searchData)) {
+          element.addClass("current");
+          return false;
+        }
+      });
     }
   }
 
