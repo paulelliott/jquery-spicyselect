@@ -8,13 +8,13 @@ Spec URL: http://demo.codingfrontier.com/jquery-spicyselect/spec/suite.html
 Features:
 
   * default value for select is carried over to spicyselect
-  * optgroups are supported
-  * optgroup labels are not selectable
+  * support for optgroups (labels are not selectable)
   * any classes present on the select or its options are carried over to the div and li's, respectively
   * sliding animations are toggleable
   * the select's change event is fired when the user selects a spicyselect option
   * up and down arrows will move current selection through options
   * enter or select will choose current option
+  * typing a name while focused will select the first occurrance that contains it (backspace will start over)
 
 Example:
 
