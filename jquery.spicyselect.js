@@ -154,6 +154,9 @@
         $("body").click(function() {
           hideMask($(".spicyselect"), settings);
         });
+
+        //Disable selection of any text within selectMask
+        selectMask.bind('select mousedown', function() { return false; });
       });
     }
   });
