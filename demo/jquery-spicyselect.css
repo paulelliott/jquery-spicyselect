@@ -52,11 +52,6 @@
   padding: 5px;
 }
 
-.spicyselect li:hover {
-  background-color: black;
-  color: white;
-}
-
 .spicyselect li.current {
   background-color: lightblue;
   color: black;

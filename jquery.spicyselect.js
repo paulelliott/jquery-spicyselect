@@ -127,6 +127,9 @@
 
         //Toggle the the ol if the display anchor is clicked
         selectMask.find("> a").click(function() {
+          //Whenever the spicyselect is clicked, put focus to the underlying select
+          selectBox.focus();
+
           if (selectMask.find("> ol").is(":visible")) {
             hideMask(selectMask, settings);
           } else {
@@ -142,6 +145,9 @@
           //Get the original select
           selectOption(mask);
           hideMask(mask, settings);
+        }).mouseover(function() {
+          selectMask.find("ol li.current").removeClass("current");
+          $(this).addClass("current");
         });
 
         //If the user clicks off the select, hide it
