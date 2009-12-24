@@ -5,8 +5,6 @@
  *
  * Copyright (c) 2009 Paul Elliott (paul@codingfrontier.com)
  *
- * Based on the jListbox jQuery plugin by Giovanni Casassa (senamion.com - senamion.it)
- *
  * Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
  */
 (function($) {
@@ -15,7 +13,9 @@
       //Override the default settings with the user settings
       var settings = $.extend({
         defaultText: "",
-        animate: true
+        animate: true,
+        label_markup: "<a></a>",
+        label_text_selector: "> a"
       }, user_settings);
 
       //Iterate through all the selects being masked
@@ -36,12 +36,13 @@
         selectBox.data("mask_id", maskId);
 
         //Insert the basic structure for the mask into the DOM right after the select
-        selectBox.after("<div id='" + maskId + "'><a></a><ol></ol></div>");
+        selectBox.after("<div id='" + maskId + "'><ol></ol></div>");
         var selectMask = $("#" + maskId).addClass("spicyselect").addClass(selectBox.attr("class")).focus(function() {
           selectMask.addClass("focus");
         });
+        selectMask.prepend(settings.label_markup);
         selectMask.data("select_id", selectBox.attr("id"));
-        var label = selectMask.find("> a");
+        var label = selectMask.find(settings.label_text_selector);
 
         //Handle the keypress events
         selectBox.keydown(function(e) {
@@ -73,7 +74,7 @@
               hideMask(selectMask, settings);
             } else if ((e.which == 13 || e.which == 32) && selectMask.find("> ol").is(":visible")) { //enter or spacebar is pressed
               //select the current option
-              selectOption(selectMask);
+              selectOption(selectMask, label);
               hideMask(selectMask, settings);
             } else if (e.which == 13) {
               //allow enter to pass through to the form if the the options are not visible.
@@ -126,7 +127,7 @@
         });
 
         //Toggle the the ol if the display anchor is clicked
-        selectMask.find("> a").click(function() {
+        selectMask.find(settings.label_text_selector).click(function() {
           //Whenever the spicyselect is clicked, put focus to the underlying select
           selectBox.focus();
 
@@ -143,7 +144,7 @@
           if ($(this).is(".optgroup_label")) return false;
           var mask = $(this).addClass("current").closest("div");
           //Get the original select
-          selectOption(mask);
+          selectOption(mask, label);
           hideMask(mask, settings);
         }).mouseover(function() {
           selectMask.find("ol li.current").removeClass("current");
@@ -172,10 +173,10 @@
     mask.addClass("focus");
   }
 
-  function selectOption(mask) {
+  function selectOption(mask, label) {
     var option = mask.find(".current");
     if (option.length > 0) {
-      mask.find("a:first").text(option.text());
+      label.text(option.text());
       $("#" + mask.data("select_id")).val(option.data("value")).change();
     }
   }

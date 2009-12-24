@@ -5,7 +5,7 @@ Screw.Unit(function() {
       $("select").each(function() {
         getMask($(this)).remove();
         $(this).removeData("mask_id");
-      });
+      }).val('');
     });
 
     describe('when applied with the default options', function() {
@@ -133,7 +133,43 @@ Screw.Unit(function() {
         });
       });
     });
+
+    describe("when applied with a custom label", function() {
+      var mask;
+
+      before(function() {
+        $("select").spicyselect({
+          animate: false,
+          label_markup: "<div><label></label><span class='indicator'></span></div>",
+          label_text_selector: "> div > label"
+        });
+        mask = getMask($("select"));
+      });
+
+      it("should have the custom markup in the label", function() {
+        expect(mask.find("> div > label").length).to(equal, 1);
+        expect(mask.find("> div > span").is(".indicator")).to(be_true);
+      });
+
+      it("should have the default text in the custom location", function() {
+        expect(mask.find("> div > label").text()).to(equal, "Valueless Option");
+      });
+
+      describe("when an option is selected", function() {
+        before(function() {
+          //Show the options
+          mask.find("> div > label").click();
+          //Select an option
+          mask.find("ol li.rockin").click();
+        });
+
+        it("should have the text for the selected option", function() {
+          expect(mask.find("> div > label").text()).to(equal, "Option Groups Rock");
+        });
+      });
+    });
   });
+
   function getMask(select) {
     return $("#" + select.data("mask_id"));
   }
