@@ -1,20 +1,47 @@
 jQuery Spicy Select Plugin
 
-This plugin allows you to apply custom styles to your select boxes.  You can invoke it on a standard select box and it will hide it and write out a "div.spicyselect > ol > li" DOM structure in its place. All interactions with the div work the same way that the select does and when values are selected in the div, they are updated in the select.  The value of the select is always current and will be posted with the form as if you had used it directly.
+This plugin allows you to apply custom styles to your select boxes.  You can invoke it on a standard select box and the plugin will hide it and write out a "div.spicyselect > ol > li" DOM structure in its place. Interactions with the div work similarly to how a regular select does. When values are selected in the div, they are updated in the select.  The value of the select is always current and will be posted with the form as if you had used it directly.
+
+To style it, you can count on it to have a class of 'spicyselect', have any classes present on the original select, and have an id of (select.id + "_mask"). When it receives focus, a "focus" class will also be added to the mask. You can download a sample stylesheet from the demo page.
 
 Demo URL: http://codingfrontier.heroku.com/jquery-spicyselect/demo/demo.html
 Spec URL: http://codingfrontier.heroku.com/jquery-spicyselect/spec/suite.html
 
 Features:
 
-  * default value for select is carried over to spicyselect
+  * default value for select is carried over to the spicyselect
   * support for optgroups (labels are not selectable)
   * any classes present on the select or its options are carried over to the div and li's, respectively
   * sliding animations are toggleable
   * the select's change event is fired when the user selects a spicyselect option
   * up and down arrows will move current selection through options
-  * enter or select will choose current option
+  * enter will choose current option
   * typing a name while focused will select the first occurrance that contains it (backspace will start over)
+  * highlighting of text is disabled
+  * 'current' class is applied on mouseover or when selecting with keyboard to style for highlighting
+  * markup for selected element is configurable
+
+Options:
+
+  defaultText
+
+    default value: ""
+    Sets the default text to display when there is no option selected.  This will be overriden by a default option, if one is present.
+
+  animate
+
+    default value: true
+    Causes the showing and hiding of the options to use a fast sliding animation.  Setting to false will change it to a regular show/hide.
+
+  label_markup
+
+    default value: "<a></a>"
+    Sets the markup that will be the label when the select is not expanded.  In the demo above, it is thefirst anchor tag inside div#test_select_mask.
+
+  label_text_selector
+
+    default value: "> a"
+    Sets the selector to use when filling in the default value.  It should be the path inside div.spicyselect to the container for the selected option.
 
 Example:
 
@@ -49,16 +76,26 @@ Example:
       </ol>
     </div>
 
-  To style it, you can count on it to have a class of 'spicyselect', have any classes present on the original select, and have an id of (select.id + "_mask"). When it receives focus, a "focus" class will also be added to the mask. You can download a sample stylesheet from the demo page.
+Example with custom label:
 
-Options:
+  $("select").spicyselect({
+    defaultText: "Something Special",
+    label_markup: "<label><span class='value'><span><span class='indicator'></span></label>"
+    label_text_selector: "> label span.value"
+  });
 
-  defaultText
+  It would write out this DOM structure:
 
-    default value: ""
-    Sets the default text to display when there is no option selected.  This will be overriden by a default option, if one is present.
-
-  animate
-
-    default value: true
-    Causes the showing and hiding of the options to use a fast sliding animation.  Setting to false will change it to a regular show/hide.
+    <div id="test_select_mask" class="spicyselect ">
+      <label><span class='value'>Something Special</span><span class='indicator'></span></label>
+      <ol>
+        <li class="">Basic Option</li>
+        <li class="">Awesome Option</li>
+        <li class="classy">Classy Option</li>
+        <ol>
+          <li class="optgroup_label">Incredible Option Group!</li>
+          <li class="">Option Groups Rock</li>
+          <li class="">This Really Is Spicy!</li>
+        </ol>
+      </ol>
+    </div>
