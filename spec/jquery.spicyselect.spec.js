@@ -31,8 +31,8 @@ Screw.Unit(function() {
         expect(mask.find("li:eq(2)").text()).to(equal, "Classy Option");
         expect(mask.find("li:eq(2)").hasClass('classy')).to(be_true);
       });
-      it("should have the correct default value", function() {
-        expect(getMask($("select")).find("> a").text()).to(equal, "Valueless Option");
+      it("has the correct default value", function() {
+        expect(getMask($("select")).find("> div a").text()).to(equal, "Valueless Option");
       });
       it("should have a nested ol for the option group", function() {
         expect(getMask($("select")).find("> ol").length).to(equal, 1);
@@ -57,10 +57,10 @@ Screw.Unit(function() {
     describe("when the anchor is clicked", function() {
       before(function() {
         $("select").spicyselect({animate:false});
-        getMask($("select")).find("a").click();
+        getMask($("select")).find("> div").click();
       });
 
-      it("should show the drop down", function() {
+      it("shows the drop down", function() {
         expect(getMask($("select")).find("> ol").is(":visible")).to(be_true);
       });
     });
@@ -140,8 +140,8 @@ Screw.Unit(function() {
       before(function() {
         $("select").spicyselect({
           animate: false,
-          label_markup: "<div><label></label><span class='indicator'></span></div>",
-          label_text_selector: "> div > label"
+          label_markup: "<label></label><span class='indicator'></span>",
+          label_text_selector: "> label"
         });
         mask = getMask($("select"));
       });

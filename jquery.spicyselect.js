@@ -36,13 +36,13 @@
         selectBox.data("mask_id", maskId);
 
         //Insert the basic structure for the mask into the DOM right after the select
-        selectBox.after("<div id='" + maskId + "'><ol></ol></div>");
+        selectBox.after("<div id='" + maskId + "'><div></div><ol></ol></div>");
         var selectMask = $("#" + maskId).addClass("spicyselect").addClass(selectBox.attr("class")).focus(function() {
           selectMask.addClass("focus");
         });
-        selectMask.prepend(settings.label_markup);
+        selectMask.find("> div").html(settings.label_markup);
         selectMask.data("select_id", selectBox.attr("id"));
-        var label = selectMask.find(settings.label_text_selector);
+        var label = selectMask.find("> div " + settings.label_text_selector);
 
         //Handle the keypress events
         selectBox.keydown(function(e) {
@@ -127,9 +127,9 @@
         });
 
         //Toggle the the ol if the display anchor is clicked
-        selectMask.find(settings.label_text_selector).click(function() {
+        selectMask.find("> div").click(function() {
           //Whenever the spicyselect is clicked, put focus to the underlying select
-          selectBox.focus();
+          selectBox.focus().click();
 
           if (selectMask.find("> ol").is(":visible")) {
             hideMask(selectMask, settings);

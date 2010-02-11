@@ -63,7 +63,7 @@ Example:
   It would write out this DOM structure:
 
     <div id="test_select_mask" class="spicyselect ">
-      <a>Valueless Option</a>
+      <div><a>Valueless Option</a></div>
       <ol>
         <li class="">Basic Option</li>
         <li class="">Awesome Option</li>
@@ -87,7 +87,7 @@ Example with custom label:
   It would write out this DOM structure:
 
     <div id="test_select_mask" class="spicyselect ">
-      <label><span class='value'>Something Special</span><span class='indicator'></span></label>
+      <div><label><span class='value'>Something Special</span><span class='indicator'></span></label></div>
       <ol>
         <li class="">Basic Option</li>
         <li class="">Awesome Option</li>
