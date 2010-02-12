@@ -151,11 +151,6 @@
           $(this).addClass("current");
         });
 
-        //If the user clicks off the select, hide it
-        $("body").click(function() {
-          hideMask($(".spicyselect"), settings);
-        });
-
         //Disable selection of any text within selectMask
         selectMask.bind('select mousedown', function() { return false; });
       });
@@ -208,4 +203,10 @@
     li.data('value', option.val());
     return li;
   }
+
+  //If the user clicks off the select, hide it
+  $("body").click(function() {
+    hideMask($(".spicyselect"), settings);
+  });
+
 })(jQuery);

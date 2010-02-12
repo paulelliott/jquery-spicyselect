@@ -168,6 +168,22 @@ Screw.Unit(function() {
         });
       });
     });
+
+    describe('when clicking off the select', function() {
+      var mask;
+
+      before(function() {
+        $("select").spicyselect({ animate: false });
+        mask = getMask($("select"));
+        mask.click();
+        $("#some_other_div").click();
+      });
+
+      it('is hidden again', function() {
+        expect(mask.find("ol").is(':hidden')).to(be_true);
+      });
+
+    });
   });
 
   function getMask(select) {
