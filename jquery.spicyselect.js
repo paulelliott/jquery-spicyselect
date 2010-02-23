@@ -25,9 +25,12 @@
           position: 'absolute',
           left: '-9999px'
         }).focus(function() {
-          $("#" + $(this).data("mask_id")).focus();
+          $("#" + $(this).data("mask_id")).addClass('focus');
         }).blur(function() {
-          hideMask($("#" + $(this).data("mask_id")), settings);
+          //IE goes crazy with this for some reason
+          if (!$.browser.msie) {
+            hideMask($("#" + $(this).data("mask_id")), settings);
+          }
         });
         var selectOptions = $("> *", this);
 
@@ -74,7 +77,7 @@
               hideMask(selectMask, settings);
             } else if ((e.which == 13 || e.which == 32) && selectMask.find("> ol").is(":visible")) { //enter or spacebar is pressed
               //select the current option
-              selectOption(selectMask, label);
+              selectOption(selectMask, label, selectMask.find("li.current"));
               hideMask(selectMask, settings);
             } else if (e.which == 13) {
               //allow enter to pass through to the form if the the options are not visible.
@@ -140,11 +143,10 @@
         });
 
         //When the user selects an option from the list
-        selectMask.find("ol li").click(function() {
+        selectMask.find("ol li").live('click', function() {
           if ($(this).is(".optgroup_label")) return false;
           var mask = $(this).addClass("current").closest("div");
-          //Get the original select
-          selectOption(mask, label);
+          selectOption(mask, label, $(this));
           hideMask(mask, settings);
         }).mouseover(function() {
           selectMask.find("ol li.current").removeClass("current");
@@ -160,16 +162,15 @@
   function hideMask(mask, settings) {
     settings.animate && mask.find("> ol").slideUp("fast") || mask.find("> ol").hide();
     mask.removeClass("focus");
-    mask.find(".current").removeClass("current");
   }
 
   function showMask(mask, settings) {
+    mask.find(".current").removeClass("current");
     settings.animate && mask.find("> ol").slideDown("fast") || mask.find("> ol").show();
     mask.addClass("focus");
   }
 
-  function selectOption(mask, label) {
-    var option = mask.find(".current");
+  function selectOption(mask, label, option) {
     if (option.length > 0) {
       label.text(option.text());
       $("#" + mask.data("select_id")).val(option.data("value")).change();
@@ -204,9 +205,19 @@
     return li;
   }
 
-  //If the user clicks off the select, hide it
-  $("body").click(function() {
-    hideMask($(".spicyselect"), settings);
-  });
+  //Lame hack for IE
+  if ($.browser.msie) {
+    //If the user clicks off the select, hide it
+    $("*").live('click', function() {
+      if ($(this).closest('.spicyselect').length == 0) {
+        hideMask($(".spicyselect"), {
+          defaultText: "",
+          animate: true,
+          label_markup: "<a></a>",
+          label_text_selector: "> a"
+        });
+      }
+    });
+  }
 
 })(jQuery);

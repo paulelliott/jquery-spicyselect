@@ -106,19 +106,13 @@ Screw.Unit(function() {
     });
 
     describe("when the select receives focus", function() {
-      var called = false, mask;
+      var mask;
 
       before(function() {
         $("select").spicyselect({animate:false});
-        mask = getMask($("select")).focus(function() {
-          called = true;
-        });
-        $("select").focus();
+        mask = getMask($("select").focus());
       });
 
-      it("should call focus on the mask", function() {
-        expect(called).to(be_true);
-      });
       it("should have class 'focus'", function() {
         expect(mask.is(".focus")).to(be_true);
       });
